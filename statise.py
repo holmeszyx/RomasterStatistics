@@ -11,6 +11,9 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 class Statise (object):
+    """
+    统计
+    """
     _name = None
     _rawData = None
     _msg = None
@@ -19,9 +22,13 @@ class Statise (object):
         self._name = name
 
     def _getRawData(self):
+        """统计过程
+            子类重写
+        """
         pass
 
     def _log(self, f):
+        """记录"""
         # print self._rawData
         f.write(self._name + " : ")
         if self._rawData != None:
@@ -35,10 +42,12 @@ class Statise (object):
         return self._name
 
     def statis(self, file):
+        """开始统计"""
         self._getRawData()
         self._log(file)
 
     def get(self, url):
+        """提到一个URL的内容"""
         client = HttpClient(url)
         return client.get()
 

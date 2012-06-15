@@ -15,10 +15,15 @@ statis.append(EoeStatis())
 statis.append(ZhangkuStatis())
 statis.append(ThreeGStatis())
 
-logFile = open("/home/holmes/xy/" + timeUtils.getFormatCurrentTime(True) + ".txt", "w")
+logFileName = timeUtils.getFormatCurrentTime() + ".txt"
+logFilePath = "/home/holmes/xy/" +logFileName
+print u"[文件保存于 %s ]" % (logFilePath)
+logFile = open(logFilePath, "w")
 for st in statis:
     print st.name()
     st.statis(logFile)
     logFile.write("\n")
 
 logFile.close()
+
+print u"[完成]"
