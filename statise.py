@@ -90,7 +90,9 @@ class AppChinaStatis(Statise):
         Statise.__init__(self, name)
 
     def _getRawData(self):
-        client = HttpClient(u"http://www.appchina.com/soft_detail_252748_0_10.html")
+        client = HttpClient(u"http://www.appchina.com/soft_detail_291336_0_10.html")
+        # html = client.get();
+        # print html;
         self._rawData = client.get().decode("utf8")
         # print self._rawData
         q = pq(self._rawData)
@@ -180,7 +182,7 @@ class AnzhiStatis(Statise):
         self._rawData = subString(count.text(), u"下载：", u"次")
 
 if __name__ == '__main__':
-    b = AnzhiStatis()
+    b = ThreeGStatis()
     f = open("./log.txt", "w")
     b.statis(f)
     f.close();
