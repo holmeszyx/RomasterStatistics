@@ -43,7 +43,12 @@ class Statise (object):
 
     def statis(self, file):
         """开始统计"""
-        self._getRawData()
+        try:
+            self._getRawData()
+        except Exception, e:
+            self._rawData = None
+            print self.name(), "something error"
+            print e
         self._log(file)
 
     def get(self, url):
