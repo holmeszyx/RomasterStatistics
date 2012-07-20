@@ -34,4 +34,4 @@ def subString(str, s, e = None):
 
 
 if __name__ == '__main__':
-  print subString("20315次下载", "", "次下载")
+  print subString("下载次数 105038次", "下载次数", "次")

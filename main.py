@@ -20,8 +20,9 @@ logFilePath = "/home/holmes/xy/" +logFileName
 print u"[文件保存于 %s ]" % (logFilePath)
 logFile = open(logFilePath, "w")
 for st in statis:
-    print st.name()
+    print st.name(),
     st.statis(logFile)
+    print "\n",
     logFile.write("\n")
 
 logFile.close()

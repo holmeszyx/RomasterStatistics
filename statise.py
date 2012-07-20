@@ -47,8 +47,8 @@ class Statise (object):
             self._getRawData()
         except Exception, e:
             self._rawData = None
-            print self.name(), "something error"
-            print e
+            print "Message: something error"
+            print "    -->", e
         self._log(file)
 
     def get(self, url):
@@ -64,16 +64,14 @@ class Baohe360Statis(Statise):
         Statise.__init__(self, name)
 
     def _getRawData(self):
-        client = HttpClient(u"http://app.m.360.cn/search/index/?kw=刷机大师")
+        client = HttpClient(r"http://zhushou.360.cn/detail/index/soft_id/87802?recrefer=SE_D_%E5%88%B7%E6%9C%BA%E5%A4%A7%E5%B8%88")
         self._rawData = client.get().decode("utf8")
         # print type(self._rawData)
         q = pq(self._rawData)
-        count = q("p.downNum:first")
-        # print count.eq(0)
-        # self._rawData = count.text().encode("utf-8")
+        count = q("dl.clearfix dd").eq(1)("p").eq(1)
         t = count.text()
         # print t, type(t)
-        self._rawData = subString(t, "", u"次下载")
+        self._rawData = subString(t, u"下载次数：", u"次")
 
 
 class HiapkStatis(Statise):
@@ -95,14 +93,16 @@ class AppChinaStatis(Statise):
         Statise.__init__(self, name)
 
     def _getRawData(self):
-        client = HttpClient(u"http://www.appchina.com/soft_detail_291336_0_10.html")
+        client = HttpClient(u"http://www.appchina.com/app/com.mgyun.shua/")
         # html = client.get();
         # print html;
         self._rawData = client.get().decode("utf8")
         # print self._rawData
         q = pq(self._rawData)
-        count = q("div.sidebar")
-        self._rawData = subString(count.eq(0).text(), u"下载：", u"次")
+        count = q("div.app-info.cf ul.app-attr.fl").eq(1)("li").eq(1)
+        # print count.eq(0).text()
+        st_data = count.eq(0).text()
+        self._rawData = subString(st_data, u"下载次数", u"次")
         # print self._rawData
 
 class CrossCatStatis(Statise):
@@ -187,7 +187,7 @@ class AnzhiStatis(Statise):
         self._rawData = subString(count.text(), u"下载：", u"次")
 
 if __name__ == '__main__':
-    b = ThreeGStatis()
+    b = Baohe360Statis()
     f = open("./log.txt", "w")
     b.statis(f)
     f.close();
