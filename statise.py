@@ -99,7 +99,7 @@ class AppChinaStatis(Statise):
         self._rawData = client.get().decode("utf8")
         # print self._rawData
         q = pq(self._rawData)
-        count = q("div.app-info.cf ul.app-attr.fl").eq(1)("li").eq(1)
+        count = q("div.app-info ul.app-attr.fl").eq(1)("li").eq(1)
         # print count.eq(0).text()
         st_data = count.eq(0).text()
         self._rawData = subString(st_data, u"下载次数", u"次")
@@ -126,7 +126,7 @@ class EoeStatis(Statise):
         Statise.__init__(self, name)
 
     def _getRawData(self):
-        self._rawData = self.get(u"http://www.eoemarket.com/apps/83711")
+        self._rawData = self.get(u"http://www.eoemarket.com/show/index/?appId=83711")
         q = pq(self._rawData)
         count = q(".downnum").eq(0)
         self._rawData = subString(count.text(), u"下载：", u"次")
@@ -187,7 +187,7 @@ class AnzhiStatis(Statise):
         self._rawData = subString(count.text(), u"下载：", u"次")
 
 if __name__ == '__main__':
-    b = Baohe360Statis()
+    b = AppChinaStatis()
     f = open("./log.txt", "w")
     b.statis(f)
     f.close();
