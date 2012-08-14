@@ -146,7 +146,7 @@ class NDuoSatatis(Statise):
         Statise.__init__(self, name)
 
     def _getRawData(self):
-        self._rawData = self.get("http://www.nduoa.com/apk/detail/320442").decode("utf8")
+        self._rawData = self.get("http://market.nduoa.com/apk/detail/343207").decode("utf8")
         q = pq(self._rawData)
         count = q("div.levelCount span.count")
         self._rawData = subString(count.eq(0).text(), u"", u"次下载")
@@ -187,7 +187,7 @@ class AnzhiStatis(Statise):
         self._rawData = subString(count.text(), u"下载：", u"次")
 
 if __name__ == '__main__':
-    b = AppChinaStatis()
+    b = NDuoSatatis()
     f = open("./log.txt", "w")
     b.statis(f)
     f.close();
